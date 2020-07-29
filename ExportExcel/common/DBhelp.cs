@@ -75,9 +75,8 @@ namespace ExportExcel.common
         /// 【离线查询的方法】使用 SqlDataAdapter 适配器执行离线查询吧结果加载到 DataSet 数据集中
         /// </summary>
         /// <param name="sql">Sql语句</param>
-        /// <param name="tempTable">DataSet 数据集的临时表名</param>
         /// <returns></returns>
-        public DataSet adapterFind(string sql, string tempTable)
+        public DataTable adapterFind(string sql)
         {
             /*
              * 【ADO.Net】第四步构建SqlDataAdapter实现离线查询
@@ -85,13 +84,13 @@ namespace ExportExcel.common
              */
             adapter = new SqlDataAdapter(sql, Connection);
             ds = new DataSet();
-            adapter.Fill(ds, tempTable);
+            adapter.Fill(ds, "a");
 
             /**
              * 【ADO.Net】第五步关闭数据连接
              * */
             conn.Close();
-            return ds;
+            return ds.Tables[0];
         }
     }
 }

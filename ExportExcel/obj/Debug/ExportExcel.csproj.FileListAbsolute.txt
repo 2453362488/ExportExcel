@@ -12,3 +12,5 @@ D:\VC\Demo\ExportExcel\ExportExcel\bin\Debug\NPOI.OOXML.dll
 D:\VC\Demo\ExportExcel\ExportExcel\bin\Debug\NPOI.OpenXml4Net.dll
 D:\VC\Demo\ExportExcel\ExportExcel\bin\Debug\NPOI.OpenXmlFormats.dll
 D:\VC\Demo\ExportExcel\ExportExcel\bin\Debug\ICSharpCode.SharpZipLib.dll
+D:\VC\Demo\ExportExcel\ExportExcel\bin\Debug\MySql.Data.dll
+D:\VC\Demo\ExportExcel\ExportExcel\bin\Debug\Oracle.ManagedDataAccess.dll

@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=5.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\ChromeDownloads\mysql.data.dll\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI">
       <HintPath>..\..\..\..\myJava\git\WinFormExcelByNPOI\WinFormExcelByNPOI\NPOI.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -47,6 +51,9 @@
     <Reference Include="NPOI.OpenXmlFormats">
       <HintPath>..\..\..\..\myJava\git\WinFormExcelByNPOI\WinFormExcelByNPOI\NPOI.OpenXmlFormats.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\..\..\..\ChromeDownloads\Oracle.ManagedDataAccess\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -84,6 +91,8 @@
     <Compile Include="common\DBhelp.cs" />
     <Compile Include="common\ExcelCellStyle.cs" />
     <Compile Include="common\GlobalVar.cs" />
+    <Compile Include="common\MySqlUtil.cs" />
+    <Compile Include="common\OracleUtil.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +125,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MySql.Data.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

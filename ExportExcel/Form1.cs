@@ -26,10 +26,25 @@ namespace ExportExcel
         private void button1_Click(object sender, EventArgs e)
         {
             // 获取数据库数据
-            DBHelp db = new DBHelp();
-            db.Url = @"Data Source=" + url.Text + "," + port.Text + ";Initial Catalog=" + dbName.Text + ";User ID=" + username.Text + ";pwd=" + password.Text + "";
-            DataSet dataSet = db.adapterFind(sql.Text, "a");
-            DataTable dataTable = dataSet.Tables[0];
+            DataTable dataTable = new DataTable();
+            if ("sqlserver".Equals(dbType.Text))
+            {
+                DBHelp db = new DBHelp();
+                db.Url = @"Data Source=" + url.Text + "," + port.Text + ";Initial Catalog=" + dbName.Text + ";User ID=" + username.Text + ";pwd=" + password.Text + "";
+                dataTable = db.adapterFind(sql.Text);
+            }
+            if ("mysql".Equals(dbType.Text))
+            {
+                MySqlUtil db = new MySqlUtil();
+                db.Url = @"server=" + url.Text + ";port=" + port.Text + ";user=" + username.Text + ";password=" + password.Text + "; database=" + dbName.Text + ";";
+                dataTable = db.adapterFind(sql.Text);
+            }
+            if ("oracle".Equals(dbType.Text))
+            {
+                OracleUtil db = new OracleUtil();
+                db.Url = @"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=" + url.Text + ")(PORT=" + port.Text + "))(CONNECT_DATA=(SERVICE_NAME=" + dbName.Text + ")));Persist Security Info=True;User ID=" + username.Text + ";Password=" + password.Text + ";";
+                dataTable = db.adapterFind(sql.Text);
+            }
             /*新建表；新建Sheet并命名；设定cellStyle*/
             XSSFWorkbook book = new XSSFWorkbook();
             ISheet sheet1 = book.CreateSheet("Sheet1");
@@ -92,18 +107,22 @@ namespace ExportExcel
 
         private void ChangeStyle(IWorkbook hssfworkbook, ISheet sheet)
         {
+            int columnWidth = 0;
+            IRow currentRow = null;
+            ICell currentCell = null;
+            int length = 0;
             for (int columnNum = 0; columnNum <= sheet.GetRow(0).LastCellNum + 12; columnNum++) //columnNum为列的数量
             {
-                int columnWidth = sheet.GetColumnWidth(columnNum) / 256; //获取当前列宽度
+                columnWidth = sheet.GetColumnWidth(columnNum) / 256; //获取当前列宽度
                 for (int rowNum = 0; rowNum <= sheet.LastRowNum; rowNum++) //在这一列上循环行
                 {
-                    IRow currentRow = sheet.GetRow(rowNum);
+                    currentRow = sheet.GetRow(rowNum);
                     if (currentRow != null)
                     {
-                        ICell currentCell = currentRow.GetCell(columnNum);
+                        currentCell = currentRow.GetCell(columnNum);
                         if (currentCell != null)
                         {
-                            int length = Encoding.Default.GetBytes(currentCell.ToString()).Length;
+                            length = Encoding.Default.GetBytes(currentCell.ToString()).Length;
                             //单元格的宽度
                             if (columnWidth < length + 1)
                             {
