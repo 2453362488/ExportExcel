@@ -27,24 +27,33 @@ namespace ExportExcel
         {
             // 获取数据库数据
             DataTable dataTable = new DataTable();
-            if ("sqlserver".Equals(dbType.Text))
+            string saveFileName = "拌合站Excel";
+            try
             {
-                DBHelp db = new DBHelp();
-                db.Url = @"Data Source=" + url.Text + "," + port.Text + ";Initial Catalog=" + dbName.Text + ";User ID=" + username.Text + ";pwd=" + password.Text + "";
-                dataTable = db.adapterFind(sql.Text);
+                if ("sqlserver".Equals(dbType.Text))
+                {
+                    DBHelp db = new DBHelp();
+                    db.Url = @"Data Source=" + url.Text + "," + port.Text + ";Initial Catalog=" + dbName.Text + ";User ID=" + username.Text + ";pwd=" + password.Text + "";
+                    dataTable = db.adapterFind(sql.Text);
+                }
+                if ("mysql".Equals(dbType.Text))
+                {
+                    MySqlUtil db = new MySqlUtil();
+                    db.Url = @"server=" + url.Text + ";port=" + port.Text + ";user=" + username.Text + ";password=" + password.Text + "; database=" + dbName.Text + ";";
+                    dataTable = db.adapterFind(sql.Text);
+                }
+                if ("oracle".Equals(dbType.Text))
+                {
+                    OracleUtil db = new OracleUtil();
+                    db.Url = @"Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=" + url.Text + ")(PORT=" + port.Text + ")))(CONNECT_DATA=(SERVICE_NAME=" + dbName.Text + ")));User ID=" + username.Text + ";Password=" + password.Text + ";";
+                    dataTable = db.adapterFind(sql.Text);
+                }
             }
-            if ("mysql".Equals(dbType.Text))
+            catch (Exception ex)
             {
-                MySqlUtil db = new MySqlUtil();
-                db.Url = @"server=" + url.Text + ";port=" + port.Text + ";user=" + username.Text + ";password=" + password.Text + "; database=" + dbName.Text + ";";
-                dataTable = db.adapterFind(sql.Text);
+                saveFileName = "查询出错请检查填写信息";
             }
-            if ("oracle".Equals(dbType.Text))
-            {
-                OracleUtil db = new OracleUtil();
-                db.Url = @"Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=" + url.Text + ")(PORT=" + port.Text + ")))(CONNECT_DATA=(SERVICE_NAME=" + dbName.Text + ")));User ID=" + username.Text + ";Password=" + password.Text + ";";
-                dataTable = db.adapterFind(sql.Text);
-            }
+            
             /*新建表；新建Sheet并命名；设定cellStyle*/
             XSSFWorkbook book = new XSSFWorkbook();
             ISheet sheet1 = book.CreateSheet("Sheet1");
@@ -88,7 +97,6 @@ namespace ExportExcel
             ChangeStyle(book, sheet1);
 
             /*IO流输出保存*/
-            string saveFileName = "拌合站Excel";
             SaveFileDialog saveDialog = new SaveFileDialog();
             saveDialog.DefaultExt = "xlsx";
             saveDialog.Filter = "Excel文件|*.xlsx";
