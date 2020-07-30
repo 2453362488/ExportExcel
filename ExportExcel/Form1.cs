@@ -42,7 +42,7 @@ namespace ExportExcel
             if ("oracle".Equals(dbType.Text))
             {
                 OracleUtil db = new OracleUtil();
-                db.Url = @"Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=" + url.Text + ")(PORT=" + port.Text + "))(CONNECT_DATA=(SERVICE_NAME=" + dbName.Text + ")));Persist Security Info=True;User ID=" + username.Text + ";Password=" + password.Text + ";";
+                db.Url = @"Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=" + url.Text + ")(PORT=" + port.Text + ")))(CONNECT_DATA=(SERVICE_NAME=" + dbName.Text + ")));User ID=" + username.Text + ";Password=" + password.Text + ";";
                 dataTable = db.adapterFind(sql.Text);
             }
             /*新建表；新建Sheet并命名；设定cellStyle*/
@@ -77,7 +77,8 @@ namespace ExportExcel
                 for (int i = 0; i < colNames.Length; i++)
                 {
                     cell = r.CreateCell(i);
-                    cell.SetCellValue(dataRow[i].ToString().Trim()); cell.CellStyle = cellStyle.style;
+                    cell.SetCellValue(dataRow[i].ToString().Trim()); 
+                    cell.CellStyle = cellStyle.style;
                 }
                 sheet1RowID = sheet1RowID + 1;
                 
