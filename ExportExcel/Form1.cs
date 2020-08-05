@@ -28,6 +28,14 @@ namespace ExportExcel
             // 获取数据库数据
             DataTable dataTable = new DataTable();
             string saveFileName = "拌合站Excel";
+
+            /*新建表；新建Sheet并命名；设定cellStyle*/
+            XSSFWorkbook book = new XSSFWorkbook();
+            ISheet sheet1 = book.CreateSheet("Sheet1");
+            IRow headerRow4Sheet1 = sheet1.CreateRow(0);
+            ExcelCellStyle cellStyle = new ExcelCellStyle(book);
+
+            ICell cell;
             try
             {
                 if ("sqlserver".Equals(dbType.Text))
@@ -39,7 +47,9 @@ namespace ExportExcel
                 if ("mysql".Equals(dbType.Text))
                 {
                     MySqlUtil db = new MySqlUtil();
-                    db.Url = @"server=" + url.Text + ";port=" + port.Text + ";user=" + username.Text + ";password=" + password.Text + "; database=" + dbName.Text + ";";
+              //      db.Url = @"server=" + url.Text + ";port=" + port.Text + ";user=" + username.Text + ";password=" + password.Text + "; database=" + dbName.Text + ";";
+              //      db.Url = @"data source=" + url.Text + ";database=" + dbName.Text + ";user id=" + username.Text + ";password=" + password.Text + ";pooling=false;charset=utf8;";
+                    db.Url = @"Server=" + url.Text + ";port=" + port.Text + ";Database=" + dbName.Text + ";Uid=" + username.Text + ";Pwd=" + password.Text + ";CharSet=utf8;";
                     dataTable = db.adapterFind(sql.Text);
                 }
                 if ("oracle".Equals(dbType.Text))
@@ -48,53 +58,49 @@ namespace ExportExcel
                     db.Url = @"Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=" + url.Text + ")(PORT=" + port.Text + ")))(CONNECT_DATA=(SERVICE_NAME=" + dbName.Text + ")));User ID=" + username.Text + ";Password=" + password.Text + ";";
                     dataTable = db.adapterFind(sql.Text);
                 }
+
+                /*设定标题行*/
+                int columnNum = 0;
+                columnNum = dataTable.Columns.Count;
+                string[] colNames = new string[columnNum];
+                for (int i = 0; i < dataTable.Columns.Count; i++)
+                {
+                    colNames[i] = dataTable.Columns[i].ColumnName;
+                }
+                for (int i = 0; i < colNames.Length; i++)
+                {
+                    cell = headerRow4Sheet1.CreateCell(i);
+                    cell.CellStyle = cellStyle.style;
+                    cell.SetCellValue(colNames[i]);
+                }
+
+                /*设定内容行*/
+                int sheet1RowID = 1;//从表格的第二2行开始进行循环
+
+                foreach (DataRow dataRow in dataTable.Rows)
+                {
+                    IRow r = sheet1.CreateRow(sheet1RowID);
+                    for (int i = 0; i < colNames.Length; i++)
+                    {
+                        cell = r.CreateCell(i);
+                        cell.SetCellValue(dataRow[i].ToString().Trim());
+                        cell.CellStyle = cellStyle.style;
+                    }
+                    sheet1RowID = sheet1RowID + 1;
+
+                }
+
+                /*单元格长度格式化*/
+                ChangeStyle(book, sheet1);
             }
             catch (Exception ex)
             {
+                cell = headerRow4Sheet1.CreateCell(0);
+                cell.CellStyle = cellStyle.style;
+                cell.SetCellValue(string.Format("异常类型：{0}\r\n异常消息：{1}\r\n异常信息：{2}\r\n",
+                                        ex.GetType().Name, ex.Message, ex.StackTrace));
                 saveFileName = "查询出错请检查填写信息";
             }
-            
-            /*新建表；新建Sheet并命名；设定cellStyle*/
-            XSSFWorkbook book = new XSSFWorkbook();
-            ISheet sheet1 = book.CreateSheet("Sheet1");
-            IRow headerRow4Sheet1 = sheet1.CreateRow(0);
-            ExcelCellStyle cellStyle = new ExcelCellStyle(book);
-
-            ICell cell;
-
-            /*设定标题行*/
-            int columnNum = 0;
-            columnNum = dataTable.Columns.Count;
-            string[] colNames = new string[columnNum];
-            for (int i = 0; i < dataTable.Columns.Count; i++)
-            {
-                colNames[i] = dataTable.Columns[i].ColumnName;
-            }
-            for (int i = 0; i < colNames.Length; i++)
-            {
-                cell = headerRow4Sheet1.CreateCell(i);
-                cell.CellStyle = cellStyle.style;
-                cell.SetCellValue(colNames[i]);
-            }
-
-            /*设定内容行*/
-            int sheet1RowID = 1;//从表格的第二2行开始进行循环
-
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                IRow r = sheet1.CreateRow(sheet1RowID);
-                for (int i = 0; i < colNames.Length; i++)
-                {
-                    cell = r.CreateCell(i);
-                    cell.SetCellValue(dataRow[i].ToString().Trim()); 
-                    cell.CellStyle = cellStyle.style;
-                }
-                sheet1RowID = sheet1RowID + 1;
-                
-            }
-
-            /*单元格长度格式化*/
-            ChangeStyle(book, sheet1);
 
             /*IO流输出保存*/
             SaveFileDialog saveDialog = new SaveFileDialog();
