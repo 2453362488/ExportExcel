@@ -48,6 +48,7 @@
     </navigator>
     <panes>
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -55,12 +56,16 @@
               <item name="ExportExcel" type="b2602c69:ProjectViewProjectNode" />
               <item name="ExportExcel" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ExportExcel" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ExportExcel" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -154,6 +159,7 @@
       <workItem from="1596611735480" duration="1393000" />
       <workItem from="1596694223788" duration="175000" />
       <workItem from="1598603657246" duration="62000" />
+      <workItem from="1599206623312" duration="90000" />
     </task>
     <task id="LOCAL-00001" summary="基于Sqlserver的Excel导出初始提交">
       <created>1595206220703</created>
@@ -215,17 +221,17 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4960000" />
+    <option name="totallyTimeSpent" value="5050000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="JRebel Console" order="7" sideWeight="0.5021322" side_tool="true" visible="true" weight="0.32972974" />
+      <window_info anchor="bottom" id="JRebel Console" order="7" sideWeight="0.5026652" side_tool="true" visible="true" weight="0.32972974" />
       <window_info anchor="right" id="Maven Projects" order="3" />
-      <window_info anchor="bottom" id="JRebel Executor" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="JRebel Executor" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
@@ -238,10 +244,10 @@
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49733475" visible="true" weight="0.32972974" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4978678" visible="true" weight="0.32972974" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2803838" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2835821" />
       <window_info id="JRebel" order="2" side_tool="true" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info anchor="right" id="Theme Preview" order="3" />
